@@ -1,7 +1,7 @@
 # Addin play
 # Install Yarn
 ---
-- name: Install RPM repository"
+- name: Install RPM repository
   get_url:
     url: https://dl.yarnpkg.com/rpm/yarn.repo
     dest: /etc/yum.repos.d/yarn.repo
