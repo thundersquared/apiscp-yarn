@@ -6,14 +6,16 @@
     url: https://dl.yarnpkg.com/rpm/yarn.repo
     dest: /etc/yum.repos.d/yarn.repo
     mode: 0644
-- name: Install package
-  package:
-    name: yarn
-    state: present
-  register: task_result
-  until: task_result is success
-  retries: 5
-  delay: 2
-- name: Link user binary
-  command: "{{ apnscp_root }}/bin/scripts/yum-post.php install --update yarn siteinfo"
-  notify: Flush fsmount on Yarn install
+- name: "Remove yarn from ssh."
+  include_role:
+    name: apnscp/initialize-filesystem-template
+    tasks_from: "remove-package.yml"
+  vars:
+    package: yarn
+- name: "Install yarn package."
+  include_role:
+    name: apnscp/initialize-filesystem-template
+    tasks_from: "install-package.yml"
+  vars:
+    package: yarn
+    service: siteinfo
